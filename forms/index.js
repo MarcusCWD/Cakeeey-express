@@ -27,7 +27,6 @@ var bootstrapField = function (name, object) {
 };
 
 const createCakeForm = (seasons, ingredients) => {
-    console.log(ingredients)
     return forms.create({
         'name': fields.string({
             required: true,

@@ -9,6 +9,7 @@
             <th>Wait Time (day)</th>
             <th>Description</th>
             <th>Season</th>
+            <th>Ingredients</th>
         </tr>
     </thead>
     <tbody>
@@ -28,6 +29,13 @@
             </td>
             <td>
                 {{this.season.name}}
+            </td>
+            <td>
+                {{#each ingredients}}
+                <ul>
+                    <li>{{this.name}}</li>
+                </ul>
+                {{/each}}
             </td>
         </tr>
         {{/each}}

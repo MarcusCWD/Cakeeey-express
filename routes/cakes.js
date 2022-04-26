@@ -18,11 +18,11 @@ async function allIngredients() {
 // CRUD - READ
 router.get("/", async (req, res) => {
   let cakes = await Cake.collection().fetch({
-    withRelated:['season']
+    withRelated:['season', 'ingredients'],
   });
-  console.log(cakes.toJSON())
   res.render("cakes/index.hbs", {
     'cakes': cakes.toJSON(),
+    'ingredients': ((cakes.toJSON())[0].ingredients[0])
   });
 });
 
