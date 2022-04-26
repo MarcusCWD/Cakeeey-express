@@ -1,0 +1,38 @@
+{{#extends 'base'}}
+
+{{#block 'content'}}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Cake ID</th>
+            <th>Cake Name</th>
+            <th>Wait Time (day)</th>
+            <th>Description</th>
+            <th>Season</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each cakes}}
+        <tr>
+            <td>
+                {{this.id}}
+            </td>
+            <td>
+                {{this.name}}
+            </td>
+            <td>
+                {{this.waittime}}
+            </td>
+            <td>
+                {{this.description}}
+            </td>
+            <td>
+                {{this.season.name}}
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+{{/block}}
+
+{{/extends}}

@@ -15,18 +15,16 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('cakes',{
-    cake_id: { type: 'int', primaryKey:true, autoIncrement:true, unsigned: true},
-    cake_name: { type: 'string', length:30, notNull:false},
-    wait_time: { type: 'smallint', notNull:true},
-    base_price: { type: 'smallint', notNull:false},
-    description:{ type: 'string', length:800, notNull:true},
-})
+  return db.createTable('ingredients', {
+      id: { type: 'int', primaryKey:true, autoIncrement:true, unsigned:true},
+      name: { type: 'string', length:50, notNull:true },
+  })
 };
 
 exports.down = function(db) {
-  return db.dropTable('cakes');
+  return db.dropTable('ingredients');
 };
+
 
 exports._meta = {
   "version": 1
