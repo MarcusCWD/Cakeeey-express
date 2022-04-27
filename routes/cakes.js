@@ -14,7 +14,6 @@ async function allIngredients() {
   });
 }
 
-
 // CRUD - READ
 router.get("/", async (req, res) => {
   let cakes = await Cake.collection().fetch({
@@ -22,7 +21,7 @@ router.get("/", async (req, res) => {
   });
   res.render("cakes/index.hbs", {
     'cakes': cakes.toJSON(),
-    'ingredients': ((cakes.toJSON())[0].ingredients[0])
+    'ingredients': ((cakes.toJSON())[0].ingredients)
   });
 });
 
@@ -51,6 +50,88 @@ router.post('/create', async(req,res)=>{
         })
     }
   })
+})
+
+// CRUD - UPDATE
+router.get('/:cake_id/update', async (req, res) => {
+  // retrieve the product
+  const cakeId = req.params.cake_id
+  const cake = await Cake.where({
+      'id': parseInt(cakeId)
+  }).fetch({
+      require: true,
+      withRelated:['ingredients']
+  });
+
+  const cakeForm = createCakeForm(await allSeasons(), await allIngredients());
+  cakeForm.fields.name.value = cake.get('name');
+  cakeForm.fields.waittime.value = cake.get('waittime');
+  cakeForm.fields.description.value = cake.get('description');
+  cakeForm.fields.season_id.value = cake.get('season_id');
+
+  // fill in the multi-select for the tags
+  let selectedIngredients = await cake.related('ingredients').pluck('id'); // an array of id values of ingredients
+  cakeForm.fields.ingredients.value= selectedIngredients; 
+
+  res.render('cakes/update.hbs', {
+      'form': cakeForm.toHTML(bootstrapField),
+      'cake': cake.toJSON()
+  })
+})
+router.post('/:cake_id/update', async (req, res) => {
+  const cake = await Cake.where({
+    'id': req.params.cake_id
+  }).fetch({
+    require: true,
+    withRelated:['ingredients']
+  });
+
+  const cakeForm = createCakeForm();
+  cakeForm.handle(req, {
+      'success': async (form) => {
+          let { ingredients, ...cakeData} = form.data;
+          cake.set(cakeData);
+          cake.save();
+          
+          let ingredientIds = ingredients.split(',');
+          let existingIngredientIds = await cake.related('ingredients').pluck('id'); // an array of id values of ingredients
+
+          let toRemove = existingIngredientIds.filter( id => ingredientIds.includes(id) === false);
+          await cake.ingredients().detach(toRemove);
+
+          await cake.ingredients().attach(ingredientIds);
+
+          res.redirect('/cakes');
+      },
+      'error': async (form) => {
+          res.render('cakes/update', {
+              'form': form.toHTML(bootstrapField)
+          })
+      }
+  })
+})
+// CRUD - DELETE
+router.get('/:cake_id/delete', async(req,res)=>{
+  // fetch the product that we want to delete
+  const cake = await Cake.where({
+      'id': req.params.cake_id
+  }).fetch({
+      require: true
+  });
+
+  res.render('cakes/delete', {
+      'cake': cake.toJSON()
+  })
+})
+router.post('/:cake_id/delete', async(req,res)=>{
+  // fetch the product that we want to delete
+  const cake = await Cake.where({
+      'id': req.params.cake_id
+  }).fetch({
+      require: true
+  });
+  await cake.destroy();
+  res.redirect('/cakes')
 })
 
 module.exports = router;

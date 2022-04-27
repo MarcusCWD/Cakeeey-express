@@ -1,50 +1,52 @@
 {{#extends 'base'}}
 
 {{#block 'content'}}
-<a href="/cakes/create" class="btn btn-primary mt-3">create</a> 
 <table class="table">
     <thead>
         <tr>
-            <th>Cake ID</th>
-            <th>Cake Name</th>
-            <th>Wait Time (day)</th>
-            <th>Description</th>
+            <th>Product ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Make Time (day)</th>
             <th>Season</th>
+            <th>Cake Size</th>
+            <th>Description</th>
             <th>Ingredients</th>
         </tr>
     </thead>
     <tbody>
-        {{#each cakes}}
+        {{#each products}}
         <tr>
             <td>
                 {{this.id}}
             </td>
             <td>
-                {{this.name}}
+                {{this.cake.name}}
             </td>
             <td>
-                {{this.waittime}}
+                {{this.price}}
             </td>
             <td>
-                {{this.description}}
+                {{this.cake.waittime}}
             </td>
             <td>
-                {{this.season.name}}
+                {{this.cake.season.name}}
             </td>
             <td>
-                {{#each ingredients}}
+                {{this.cakesize.size}}
+            </td>
+            <td>
+                {{this.cake.description}}
+            </td>
+            <td>
+                {{#each this.cake.ingredients}}
                 <ul>
                     <li>{{this.name}}</li>
                 </ul>
                 {{/each}}
             </td>
-            <td>
-                <a href="/cakes/{{this.id}}/update" class="btn btn-primary btn-sm">Update</a>
-                <a href="/cakes/{{this.id}}/delete" class="btn btn-danger btn-sm">Delete</a>
-            </td>    
         </tr>
         {{/each}}
-        
     </tbody>
 </table>
 {{/block}}

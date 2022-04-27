@@ -7,6 +7,9 @@ const Cake = bookshelf.model('Cake', {
     },
     ingredients(){
         return this.belongsToMany('Ingredient')
+    },
+    products(){
+        return this.hasMany('Product')
     }
 });
 const Season = bookshelf.model('Season', {
@@ -20,8 +23,27 @@ const Ingredient = bookshelf.model('Ingredient',{
     cakes() {
         return this.belongsToMany('Cake')
     }
-})
+});
+const Product = bookshelf.model('Product', {
+    tableName:'products',
+    cakesize(){
+        return this.belongsTo('Cakesize')
+    },
+    cake(){
+        return this.belongsTo('Cake')
+    },
+
+});
+const Cakesize = bookshelf.model('Cakesize', {
+    tableName:'cakesizes',
+    products(){
+        return this.hasMany('Product')
+    }
+});
 
 
 
-module.exports = { Cake, Season, Ingredient };
+
+
+
+module.exports = { Cake, Season, Ingredient, Product, Cakesize };

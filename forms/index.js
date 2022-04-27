@@ -73,5 +73,18 @@ const createCakeForm = (seasons, ingredients) => {
     })
 };
 
+const createProductForm = () => {
+    return forms.create({
+        'price': fields.string({
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+        }),
+        
+    })
+};
 
-module.exports = { createCakeForm, bootstrapField };
+
+module.exports = { createCakeForm, createProductForm, bootstrapField };
