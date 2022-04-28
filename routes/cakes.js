@@ -20,8 +20,7 @@ router.get("/", async (req, res) => {
     withRelated:['season', 'ingredients'],
   });
   res.render("cakes/index.hbs", {
-    'cakes': cakes.toJSON(),
-    'ingredients': ((cakes.toJSON())[0].ingredients)
+    'cakes': cakes.toJSON()
   });
 });
 

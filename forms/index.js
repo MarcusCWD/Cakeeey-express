@@ -73,16 +73,34 @@ const createCakeForm = (seasons, ingredients) => {
     })
 };
 
-const createProductForm = () => {
+const createProductForm = (cake, size) => {
     return forms.create({
+        'cake_id': fields.string({
+            label:'Base Cake',
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.select(),
+            choices: cake
+        }),
+        'cakesize_id': fields.string({
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.select(),
+            choices: size
+        }),
         'price': fields.string({
             required: true,
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']
             },
-        }),
-        
+        })
     })
 };
 
