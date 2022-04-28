@@ -32,18 +32,29 @@ router.get('/create', async (req, res) => {
   })
 })
 router.post('/create', async(req,res)=>{
+  // need to check for the repeated name of base cake
+  let cakes = await Cake.collection().fetch();
   const cakeForm = createCakeForm(await allSeasons());
   cakeForm.handle(req, {
       'success': async (form) => {
+        for (let oneCake of cakes.toJSON()) {
+          if (form.fields.name.value == oneCake.name) {
+              req.flash("error_messages", `${form.fields.name.value} base cake already exist within the database`);
+              res.redirect("/cakes/create");
+              return;
+          }
+        }
         let {ingredients, ...cakeData} = form.data;
         const cake = new Cake(cakeData);
         await cake.save();
         if (ingredients) {
           await cake.ingredients().attach(ingredients.split(","));
         }
-          res.redirect('/cakes');
+        req.flash("success_messages", `New Cake base ${(cake.toJSON()).name} has been created`)
+        res.redirect('/cakes');
       },
       'error': async (form) => {
+        req.flash("error_messages", `Creation error. Try again`);
         res.render('cakes/create.hbs', {
             'form': form.toHTML(bootstrapField)
         })
@@ -99,10 +110,11 @@ router.post('/:cake_id/update', async (req, res) => {
           await cake.ingredients().detach(toRemove);
 
           await cake.ingredients().attach(ingredientIds);
-
+          req.flash("success_messages", `New Cake base ${(cake.toJSON()).name} has been updated`)
           res.redirect('/cakes');
       },
       'error': async (form) => {
+          req.flash("error_messages", `Creation error. Try again`);
           res.render('cakes/update', {
               'form': form.toHTML(bootstrapField)
           })
@@ -129,7 +141,9 @@ router.post('/:cake_id/delete', async(req,res)=>{
   }).fetch({
       require: true
   });
+  let cakeTemp = cake
   await cake.destroy();
+  req.flash("success_messages", `Cake has been deleted`);
   res.redirect('/cakes')
 })
 

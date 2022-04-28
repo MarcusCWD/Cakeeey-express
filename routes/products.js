@@ -40,7 +40,7 @@ router.post("/create", async (req, res) => {
       for (let oneProduct of products.toJSON()) {
         if (form.fields.cake_id.value == oneProduct.cake_id) {
           if (form.fields.cakesize_id.value == oneProduct.cakesize_id) {
-            req.flash("error_messages", `This product is already existing within database`);
+            req.flash("error_messages", `This product already exist within the database`);
             res.redirect("/products/create");
             return;
           }
@@ -139,7 +139,6 @@ router.post("/:product_id/delete", async (req, res) => {
     require: true,
     withRelated: ["cake", "cakesize"]
   });
-  console.log(product.toJSON())
   await product.destroy();
   req.flash("success_messages", `Product ${(product.toJSON()).cake.name}, ${(product.toJSON()).cakesize.size}cm has been deleted`);
   res.redirect("/products");
