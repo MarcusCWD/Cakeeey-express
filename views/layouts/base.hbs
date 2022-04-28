@@ -40,10 +40,25 @@
     </div>
   </nav>
   <div class="container">
+    {{#if success_messages }}
+      {{#each success_messages}}
+        <div class="alert alert-success">
+          {{this}}
+        </div>
+      {{/each}}
+    {{/if}}
+
+    {{#if error_messages}}
+      {{#each error_messages}}
+        <div class="alert alert-danger">
+          {{this}}
+        </div>
+      {{/each}}
+    {{/if}}
     {{#block 'content'}}{{/block}}
   </div>
   {{!-- <div style="background-image: url('./dough-with-rolling-pin-egg-carton.jpg'); height: 1000px;"></div> --}}
-  
+
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
