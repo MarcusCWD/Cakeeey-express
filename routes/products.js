@@ -6,6 +6,7 @@ const { bootstrapField, createProductForm } = require("../forms");
 async function allCakes() {
   return await Cake.fetchAll().map((cake) => {
     return [cake.get("id"), cake.get("name")];
+    // [1, blueberry]
   });
 }
 async function allSize() {
@@ -47,16 +48,16 @@ router.post("/create", async (req, res) => {
         }
       }
       const product = new Product(form.data);
-      console.log(product.toJSON())
       await product.save();
 
-      const fetchProduct = await Product.where({
-        id: form.fields.cake_id.value,
-      }).fetch({
-        require: true,
-        withRelated: ["cake", "cakesize"]
-      });
-      req.flash("success_messages", `New Product ${(fetchProduct.toJSON()).cake.name}, ${(fetchProduct.toJSON()).cakesize.size} has been created`)
+      // const fetchProduct = await Product.where({
+      //   id: form.fields.cake_id.value,
+      // }).fetch({
+      //   require: true,
+      //   withRelated: ["cake", "cakesize"]
+      // });
+      // req.flash("success_messages", `New Product ${(fetchProduct.toJSON()).cake.name}, ${(fetchProduct.toJSON()).cakesize.size} has been created`)
+      req.flash("success_messages", `New Product has been created`)
       res.redirect("/products");
     },
     error: async (form) => {

@@ -26,7 +26,7 @@ router.get("/", async (req, res) => {
 
 // CRUD - CREATE
 router.get('/create', async (req, res) => {
-  const cakeForm = createCakeForm(await allSeasons(), await allIngredients())
+  const cakeForm = createCakeForm( await allSeasons(), await allIngredients())
   res.render('cakes/create.hbs',{
       'form': cakeForm.toHTML(bootstrapField)
   })
@@ -34,7 +34,7 @@ router.get('/create', async (req, res) => {
 router.post('/create', async(req,res)=>{
   // need to check for the repeated name of base cake
   let cakes = await Cake.collection().fetch();
-  const cakeForm = createCakeForm(await allSeasons());
+  const cakeForm = createCakeForm(await allSeasons(), await allIngredients());
   cakeForm.handle(req, {
       'success': async (form) => {
         for (let oneCake of cakes.toJSON()) {
@@ -141,7 +141,6 @@ router.post('/:cake_id/delete', async(req,res)=>{
   }).fetch({
       require: true
   });
-  let cakeTemp = cake
   await cake.destroy();
   req.flash("success_messages", `Cake has been deleted`);
   res.redirect('/cakes')
