@@ -1,17 +1,19 @@
 {{#extends 'base'}}
 
 {{#block 'content'}}
+<a href="/products/create" class="btn btn-success mt-3">create</a> 
 <table class="table">
     <thead>
         <tr>
             <th>Product ID</th>
             <th>Name</th>
-            <th>Price</th>
+            <th>Price (Cents)</th>
             <th>Make Time (day)</th>
             <th>Season</th>
-            <th>Cake Size</th>
+            <th>Cake Size (CM)</th>
             <th>Description</th>
             <th>Ingredients</th>
+            <th>EDIT</th>
         </tr>
     </thead>
     <tbody>
@@ -45,6 +47,10 @@
                 </ul>
                 {{/each}}
             </td>
+            <td>
+                <a href="/products/{{this.id}}/update" class="btn btn-primary btn-sm">Update</a>
+                <a href="/products/{{this.id}}/delete" class="btn btn-danger btn-sm">Delete</a>
+            </td>  
         </tr>
         {{/each}}
     </tbody>

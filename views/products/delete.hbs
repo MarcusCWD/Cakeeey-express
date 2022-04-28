@@ -1,11 +1,11 @@
 {{#extends 'base'}}
 
 {{#block 'content'}}
-<h1>Deleting Cake: {{cake.name}}</h1>
+<h1>Deleting Product: {{product.name}}</h1>
 
 <form method="POST">
     <div class="alert alert-danger">
-        <p>Are you sure you want to delete cake base {{cake.name}}?</p>
+        <p>Are you sure you want to delete product {{product.name}}?</p>
         <input type="submit" class="btn btn-danger" value="Yes"/>
         <a href="/cakes" class="btn btn-success">No</a>
     </div>
