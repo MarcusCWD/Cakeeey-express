@@ -3,6 +3,8 @@ const router = express.Router();
 const { Cake, Season, Ingredient } = require("../models");
 const { bootstrapField, createCakeForm } = require('../forms');
 
+const { checkIfAuthenticated } = require('../middlewares');
+
 async function allSeasons() {
   return await Season.fetchAll().map((season) => {
     return [season.get("id"), season.get("name")];
@@ -15,7 +17,7 @@ async function allIngredients() {
 }
 
 // CRUD - READ
-router.get("/", async (req, res) => {
+router.get("/", checkIfAuthenticated, async (req, res) => {
   let cakes = await Cake.collection().fetch({
     withRelated:['season', 'ingredients'],
   });
@@ -25,7 +27,7 @@ router.get("/", async (req, res) => {
 });
 
 // CRUD - CREATE
-router.get('/create', async (req, res) => {
+router.get('/create', checkIfAuthenticated, async (req, res) => {
   const cakeForm = createCakeForm( await allSeasons(), await allIngredients())
   res.render('cakes/create.hbs',{
       'form': cakeForm.toHTML(bootstrapField)
@@ -63,7 +65,7 @@ router.post('/create', async(req,res)=>{
 })
 
 // CRUD - UPDATE
-router.get('/:cake_id/update', async (req, res) => {
+router.get('/:cake_id/update', checkIfAuthenticated, async (req, res) => {
   // retrieve the product
   const cakeId = req.params.cake_id
   const cake = await Cake.where({
@@ -122,7 +124,7 @@ router.post('/:cake_id/update', async (req, res) => {
   })
 })
 // CRUD - DELETE
-router.get('/:cake_id/delete', async(req,res)=>{
+router.get('/:cake_id/delete', checkIfAuthenticated, async(req,res)=>{
   // fetch the product that we want to delete
   const cake = await Cake.where({
       'id': req.params.cake_id

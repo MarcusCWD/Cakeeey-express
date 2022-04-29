@@ -3,6 +3,8 @@ const router = express.Router();
 const { Cake, Product, Cakesize } = require("../models");
 const { bootstrapField, createProductForm } = require("../forms");
 
+const { checkIfAuthenticated } = require('../middlewares');
+
 async function allCakes() {
   return await Cake.fetchAll().map((cake) => {
     return [cake.get("id"), cake.get("name")];
@@ -16,7 +18,7 @@ async function allSize() {
 }
 
 // CRUD - READ
-router.get("/", async (req, res) => {
+router.get("/", checkIfAuthenticated, async (req, res) => {
   let products = await Product.collection().fetch({
     withRelated: ["cake.season", "cakesize", "cake.ingredients"],
   });
@@ -26,7 +28,7 @@ router.get("/", async (req, res) => {
 });
 
 // CRUD - CREATE
-router.get("/create", async (req, res) => {
+router.get("/create", checkIfAuthenticated, async (req, res) => {
   const productForm = createProductForm(await allCakes(), await allSize());
   res.render("products/create.hbs", {
     form: productForm.toHTML(bootstrapField),
@@ -70,7 +72,7 @@ router.post("/create", async (req, res) => {
 });
 
 // CRUD - UPDATE
-router.get("/:product_id/update", async (req, res) => {
+router.get("/:product_id/update", checkIfAuthenticated, async (req, res) => {
   const productId = req.params.product_id;
   const product = await Product.where({
     id: productId,
@@ -101,9 +103,11 @@ router.post("/:product_id/update", async (req, res) => {
       for (let oneProduct of products.toJSON()) {
         if (form.fields.cake_id.value == oneProduct.cake_id) {
           if (form.fields.cakesize_id.value == oneProduct.cakesize_id) {
-            req.flash("error_messages", `This product is already existing within database`);
-            res.redirect("/products");
-            return;
+            if (form.fields.price.value == oneProduct.price) {
+              req.flash("error_messages", `This product is already existing within database`);
+              res.redirect("/products");
+              return;
+            }
           }
         }
       }
@@ -122,7 +126,7 @@ router.post("/:product_id/update", async (req, res) => {
 });
 
 // CRUD - DELETE
-router.get("/:product_id/delete", async (req, res) => {
+router.get("/:product_id/delete", checkIfAuthenticated, async (req, res) => {
   // fetch the product that we want to delete
   const product = await Product.where({
     id: req.params.product_id,

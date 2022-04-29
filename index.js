@@ -32,6 +32,7 @@ app.use(
 const landingRoutes = require("./routes/landing");
 const cakeRoutes = require("./routes/cakes");
 const productRoutes = require("./routes/products");
+const userRoutes = require("./routes/users");
 async function main() {
   // set up sessions
   app.use(
@@ -42,15 +43,24 @@ async function main() {
       saveUninitialized: true,
     })
   );
+
   // Register Flash middleware
   app.use(function (req, res, next) {
     res.locals.success_messages = req.flash("success_messages");
     res.locals.error_messages = req.flash("error_messages");
     next();
   });
+  
+  // Share the user data with hbs files
+  app.use(function (req, res, next) {
+    res.locals.user = req.session.user;
+    next();
+  });
+
   app.use("/", landingRoutes);
   app.use("/cakes", cakeRoutes);
   app.use("/products", productRoutes);
+  app.use("/users", userRoutes);
 }
 
 main();

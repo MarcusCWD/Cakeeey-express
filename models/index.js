@@ -40,10 +40,14 @@ const Cakesize = bookshelf.model('Cakesize', {
         return this.hasMany('Product')
     }
 });
+const User = bookshelf.model('User',{
+    tableName: 'users'
+})
 
 
 
 
 
 
-module.exports = { Cake, Season, Ingredient, Product, Cakesize };
+
+module.exports = { Cake, Season, Ingredient, Product, Cakesize, User };
