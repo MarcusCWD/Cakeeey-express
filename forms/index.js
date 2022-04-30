@@ -28,6 +28,9 @@ var bootstrapField = function (name, object) {
 
 const createCakeForm = (seasons, ingredients) => {
     return forms.create({
+        'image_url':fields.string({
+            widget: widgets.hidden()
+        }),
         'name': fields.string({
             required: true,
             errorAfterField: true,

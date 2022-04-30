@@ -1,10 +1,11 @@
 {{#extends 'base'}}
 
 {{#block 'content'}}
-<a href="/cakes/create" class="btn btn-success mt-3">create</a> 
+<a href="/cakes/create" class="btn btn-success mt-3">create</a>
 <table class="table">
     <thead>
         <tr>
+            <th>Cake Image</th>
             <th>Cake ID</th>
             <th>Cake Name</th>
             <th>Make Time (day)</th>
@@ -17,6 +18,15 @@
     <tbody>
         {{#each cakes}}
         <tr>
+            <td>
+                <div>
+                    {{#if this.image_url}}
+                    <img src="{{this.image_url}}" id="uploaded_image" width="200" />
+                    {{else}}
+                    <img src="" style="display:none" id="uploaded_image" />
+                    {{/if}}
+                </div>
+            </td>
             <td>
                 {{this.id}}
             </td>
@@ -42,10 +52,10 @@
             <td>
                 <a href="/cakes/{{this.id}}/update" class="btn btn-primary btn-sm">Update</a>
                 <a href="/cakes/{{this.id}}/delete" class="btn btn-danger btn-sm">Delete</a>
-            </td>    
+            </td>
         </tr>
         {{/each}}
-        
+
     </tbody>
 </table>
 {{/block}}

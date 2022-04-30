@@ -22,7 +22,11 @@ router.get("/", checkIfAuthenticated, async (req, res) => {
     withRelated:['season', 'ingredients'],
   });
   res.render("cakes/index.hbs", {
-    'cakes': cakes.toJSON()
+    'cakes': cakes.toJSON(),
+    cloudinaryName: process.env.CLOUDINARY_NAME,
+    cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+    cloudinaryPreset: process.env.CLOUDINARY_UPLOAD_PRESET
+
   });
 });
 
@@ -30,7 +34,10 @@ router.get("/", checkIfAuthenticated, async (req, res) => {
 router.get('/create', checkIfAuthenticated, async (req, res) => {
   const cakeForm = createCakeForm( await allSeasons(), await allIngredients())
   res.render('cakes/create.hbs',{
-      'form': cakeForm.toHTML(bootstrapField)
+      'form': cakeForm.toHTML(bootstrapField),
+      cloudinaryName: process.env.CLOUDINARY_NAME,
+      cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+      cloudinaryPreset: process.env.CLOUDINARY_UPLOAD_PRESET
   })
 })
 router.post('/create', async(req,res)=>{
@@ -80,6 +87,7 @@ router.get('/:cake_id/update', checkIfAuthenticated, async (req, res) => {
   cakeForm.fields.waittime.value = cake.get('waittime');
   cakeForm.fields.description.value = cake.get('description');
   cakeForm.fields.season_id.value = cake.get('season_id');
+  cakeForm.fields.image_url.value = cake.get('image_url');
 
   // fill in the multi-select for the tags
   let selectedIngredients = await cake.related('ingredients').pluck('id'); // an array of id values of ingredients
@@ -87,7 +95,11 @@ router.get('/:cake_id/update', checkIfAuthenticated, async (req, res) => {
 
   res.render('cakes/update.hbs', {
       'form': cakeForm.toHTML(bootstrapField),
-      'cake': cake.toJSON()
+      'cake': cake.toJSON(),
+      cloudinaryName: process.env.CLOUDINARY_NAME,
+      cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+      cloudinaryPreset: process.env.CLOUDINARY_UPLOAD_PRESET
+
   })
 })
 router.post('/:cake_id/update', async (req, res) => {
