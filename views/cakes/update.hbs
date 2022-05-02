@@ -3,20 +3,24 @@
 {{#block 'content'}}
 <h1>Update Cake: {{cake.name}}</h1>
 <form method="POST">
-    <input type="hidden" name="_csrf" value="{{csrfToken}}" />
-    {{{form}}}
-    <div>
-        {{#if cake.image_url}}
-        <img src="{{cake.image_url}}" id="uploaded_image" width="200" />
-        {{else}}
-        <img src="" style="display:none" id="uploaded_image" />
-        {{/if}}
-    </div>
-    <div>
+    <div class="py-1">
+        <div class="py-1">Image</div>
+        <div style="border: 4px solid  #8f9192; height: 400px; width: 400px" class="d-flex justify-content-center">
+            <div>
+                {{#if cake.image_url}}
+                <img src="{{cake.image_url}}" id="uploaded_image" width="250px" />
+                {{else}}
+                <img src="" style="display:none" id="uploaded_image" />
+                {{/if}}
+            </div>
+        </div>
         <a href="#" class="btn btn-primary" id="upload_widget">Upload</a>
     </div>
 
+    <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+    {{{form}}}
     <input type="submit" value="Update Base Cake" class="btn btn-primary" />
+
 </form>
 {{/block}}
 
@@ -46,7 +50,7 @@
         if (!error && result && result.event === "success") {
             console.log('Done! Here is the image info: ', result.info);
             // hide the upload widget 
-            document.querySelector('#upload_widget').style.display = "none";
+            //document.querySelector('#upload_widget').style.display = "none";
 
             // display the image
             document.querySelector('#id_image_url').value = result.info.url;

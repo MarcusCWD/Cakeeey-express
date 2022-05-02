@@ -174,6 +174,37 @@ const createLoginForm = () => {
     })
 }
 
+const createSearchForm = (seasons, ingredients) => {
+    return forms.create({
+        'name': fields.string({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            }
+        }),
+        'season_id': fields.string({
+            label: 'Season',
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.select(),
+            choices: seasons
+        }),
+        'ingredients': fields.string({
+            required:false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.multipleSelect(),
+            choices: ingredients
+        }),
+    })
+}
 
 
-module.exports = { createCakeForm, createProductForm, createRegistrationForm, createLoginForm, bootstrapField };
+
+module.exports = { createCakeForm, createProductForm, createRegistrationForm, createLoginForm, createSearchForm, bootstrapField };

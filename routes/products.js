@@ -3,12 +3,11 @@ const router = express.Router();
 const { Cake, Product, Cakesize } = require("../models");
 const { bootstrapField, createProductForm } = require("../forms");
 
-const { checkIfAuthenticated } = require('../middlewares');
+const { checkIfAuthenticated } = require("../middlewares");
 
 async function allCakes() {
   return await Cake.fetchAll().map((cake) => {
     return [cake.get("id"), cake.get("name")];
-    // [1, blueberry]
   });
 }
 async function allSize() {
@@ -43,7 +42,10 @@ router.post("/create", async (req, res) => {
       for (let oneProduct of products.toJSON()) {
         if (form.fields.cake_id.value == oneProduct.cake_id) {
           if (form.fields.cakesize_id.value == oneProduct.cakesize_id) {
-            req.flash("error_messages", `This product already exist within the database`);
+            req.flash(
+              "error_messages",
+              `This product already exist within the database`
+            );
             res.redirect("/products/create");
             return;
           }
@@ -52,14 +54,7 @@ router.post("/create", async (req, res) => {
       const product = new Product(form.data);
       await product.save();
 
-      // const fetchProduct = await Product.where({
-      //   id: form.fields.cake_id.value,
-      // }).fetch({
-      //   require: true,
-      //   withRelated: ["cake", "cakesize"]
-      // });
-      // req.flash("success_messages", `New Product ${(fetchProduct.toJSON()).cake.name}, ${(fetchProduct.toJSON()).cakesize.size} has been created`)
-      req.flash("success_messages", `New Product has been created`)
+      req.flash("success_messages", `New Product has been created`);
       res.redirect("/products");
     },
     error: async (form) => {
@@ -100,14 +95,16 @@ router.post("/:product_id/update", async (req, res) => {
   const productForm = createProductForm(await allCakes(), await allSize());
   productForm.handle(req, {
     success: async (form) => {
+      console.log(product.toJSON());
       for (let oneProduct of products.toJSON()) {
         if (form.fields.cake_id.value == oneProduct.cake_id) {
           if (form.fields.cakesize_id.value == oneProduct.cakesize_id) {
-            if (form.fields.price.value == oneProduct.price) {
-              req.flash("error_messages", `This product is already existing within database`);
-              res.redirect("/products");
-              return;
-            }
+            req.flash(
+              "error_messages",
+              `This product is already existing within database`
+            );
+            res.redirect("/products");
+            return;
           }
         }
       }
@@ -142,10 +139,15 @@ router.post("/:product_id/delete", async (req, res) => {
     id: req.params.product_id,
   }).fetch({
     require: true,
-    withRelated: ["cake", "cakesize"]
+    withRelated: ["cake", "cakesize"],
   });
   await product.destroy();
-  req.flash("success_messages", `Product ${(product.toJSON()).cake.name}, ${(product.toJSON()).cakesize.size}cm has been deleted`);
+  req.flash(
+    "success_messages",
+    `Product ${product.toJSON().cake.name}, ${
+      product.toJSON().cakesize.size
+    }cm has been deleted`
+  );
   res.redirect("/products");
 });
 
