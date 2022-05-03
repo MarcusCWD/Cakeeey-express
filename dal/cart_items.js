@@ -7,7 +7,7 @@ const allCart = async (userId) => {
     })
     .fetch({
       require: false,
-      withRelated: ["product", "product.cake"],
+      withRelated: ["product", "product.cake", "product.cake.season"],
     });
 };
 const allCartItemByUserAndProduct = async (userId, productId) => {
@@ -36,10 +36,10 @@ async function removeFromCart(userId, productId) {
     return false;
 }
 async function updateQuantity(userId, productId, newQuantity) {
-    let cartItem = await getCartItemByUserAndProduct(userId, productId);
-    if (cartItem) {
-        cartItem.set('quantity', newQuantity);
-        cartItem.save();
+    let cartitem = await allCartItemByUserAndProduct(userId, productId);
+    if (cartitem) {
+        cartitem.set('quantity', newQuantity);
+        await cartitem.save();
         return true;
     }
     return false;

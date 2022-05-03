@@ -11,18 +11,19 @@ class CartServices {
 
   async addToCart(productId, quantity) {
     //add in the BUSNESS RULES HERE
-    // check if the user has added the product to the shopping cart before
     let cartItem = await cartDataLayer.allCartItemByUserAndProduct(
       this.user_id,
       productId
     );
-    if (cartItem) {
+
+    // check if the user has added the product to the shopping cart before
+    if (cartItem) { // if this item already exist within database, then qty +1
       return await cartDataLayer.updateQuantity(
         this.user_id,
         productId,
-        cartItem.get("quantity") + 1
+        cartItem.get("quantity") + quantity
       );
-    } else {
+    } else { // if not, this item is new. so we need to create and add it to the database
       let newCartItem = cartDataLayer.createCartItem(
         this.user_id,
         productId,
@@ -36,11 +37,11 @@ class CartServices {
     return await cartDataLayer.removeFromCart(this.user_id, productId);
   }
 
-  async setQuantity(productId, quantity) {
+  async setQuantity(productId, newQuantity) {
     return await cartDataLayer.updateQuantity(
       this.user_id,
       productId,
-      quantity
+      newQuantity
     );
   }
 }
