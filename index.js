@@ -38,6 +38,11 @@ const userRoutes = require("./routes/users");
 const cloudinaryRoutes = require('./routes/cloudinary')
 const cartRoutes = require('./routes/shoppingCart');
 const { checkIfAuthenticated } = require("./middlewares");
+const checkoutRoutes  = require("./routes/checkout");
+
+const api = {
+  products: require('./routes/api/products')
+}
 
 async function main() {
   // set up sessions
@@ -86,6 +91,8 @@ async function main() {
   app.use("/users", userRoutes);
   app.use('/cloudinary', cloudinaryRoutes);
   app.use('/cart',checkIfAuthenticated, cartRoutes);
+  app.use('/checkout', checkoutRoutes);
+  app.use('/api/products', api.products);
 }
 
 main();
