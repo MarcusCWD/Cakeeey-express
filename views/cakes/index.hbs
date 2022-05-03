@@ -2,8 +2,13 @@
 
 {{#block 'content'}}
 <form method="GET">
-   {{{form}}}
-    <input type="submit" class="mb-3 mt-3 btn btn-primary" value="Search"/>
+    <h1 class='py-3'>Main Base Cake Page</h1>
+    <p class="fw-bold py-1">Search</p>
+    <div class="py-1" style="border: 4px solid  #8f9192">
+        {{{form}}}
+        <input type="submit" class="mb-3 mt-3 btn btn-primary" value="Search" />
+        <a href="/cakes" class="mb-3 mt-3 btn btn-secondary">Reset Search</a>
+    </div>
 </form>
 <a href="/cakes/create" class="btn btn-success mt-3">create</a>
 <table class="table">
