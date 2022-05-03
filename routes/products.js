@@ -5,16 +5,8 @@ const { bootstrapField, createProductForm } = require("../forms");
 
 const { checkIfAuthenticated } = require("../middlewares");
 
-async function allCakes() {
-  return await Cake.fetchAll().map((cake) => {
-    return [cake.get("id"), cake.get("name")];
-  });
-}
-async function allSize() {
-  return await Cakesize.fetchAll().map((size) => {
-    return [size.get("id"), size.get("size")];
-  });
-}
+// import in the DAL
+const dataLayer = require('../dal/products')
 
 // CRUD - READ
 router.get("/", checkIfAuthenticated, async (req, res) => {
@@ -28,7 +20,7 @@ router.get("/", checkIfAuthenticated, async (req, res) => {
 
 // CRUD - CREATE
 router.get("/create", checkIfAuthenticated, async (req, res) => {
-  const productForm = createProductForm(await allCakes(), await allSize());
+  const productForm = createProductForm(await dataLayer.allCakes(), await dataLayer.allSize());
   res.render("products/create.hbs", {
     form: productForm.toHTML(bootstrapField),
   });
@@ -36,7 +28,7 @@ router.get("/create", checkIfAuthenticated, async (req, res) => {
 router.post("/create", async (req, res) => {
   // during the post, there needs to be a check for repeated product for variation size
   let products = await Product.collection().fetch();
-  const productForm = createProductForm(await allCakes(), await allSize());
+  const productForm = createProductForm(await dataLayer.allCakes(), await dataLayer.allSize());
   productForm.handle(req, {
     success: async (form) => {
       for (let oneProduct of products.toJSON()) {
@@ -75,7 +67,7 @@ router.get("/:product_id/update", checkIfAuthenticated, async (req, res) => {
     require: true,
   });
 
-  const productForm = createProductForm(await allCakes(), await allSize());
+  const productForm = createProductForm(await dataLayer.allCakes(), await dataLayer.allSize());
   productForm.fields.cake_id.value = product.get("cake_id");
   productForm.fields.cakesize_id.value = product.get("cakesize_id");
   productForm.fields.price.value = product.get("price");
@@ -92,10 +84,9 @@ router.post("/:product_id/update", async (req, res) => {
   }).fetch({
     required: true,
   });
-  const productForm = createProductForm(await allCakes(), await allSize());
+  const productForm = createProductForm(await dataLayer.allCakes(), await dataLayer.allSize());
   productForm.handle(req, {
     success: async (form) => {
-      console.log(product.toJSON());
       for (let oneProduct of products.toJSON()) {
         if (form.fields.cake_id.value == oneProduct.cake_id) {
           if (form.fields.cakesize_id.value == oneProduct.cakesize_id) {

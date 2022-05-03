@@ -9,35 +9,13 @@ const {
 
 const { checkIfAuthenticated } = require("../middlewares");
 
-async function allSeasons() {
-  return await Season.fetchAll().map((season) => {
-    return [season.get("id"), season.get("name")];
-  });
-}
-async function allIngredients() {
-  return await Ingredient.fetchAll().map((ingredient) => {
-    return [ingredient.get("id"), ingredient.get("name")];
-  });
-}
-
-// CRUD - READ
-// router.get("/", checkIfAuthenticated, async (req, res) => {
-//   let cakes = await Cake.collection().fetch({
-//     withRelated:['season', 'ingredients'],
-//   });
-//   res.render("cakes/index.hbs", {
-//     'cakes': cakes.toJSON(),
-//     cloudinaryName: process.env.CLOUDINARY_NAME,
-//     cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
-//     cloudinaryPreset: process.env.CLOUDINARY_UPLOAD_PRESET
-
-//   });
-// });
+// import in the DAL
+const dataLayer = require('../dal/cakes')
 
 router.get("/", checkIfAuthenticated, async (req, res) => {
-  let xSeasons = await allSeasons();
+  let xSeasons = await dataLayer.allSeasons();
   xSeasons.unshift([0, "ALL"]);
-  let searchForm = createSearchForm(xSeasons, await allIngredients());
+  let searchForm = createSearchForm(xSeasons, await dataLayer.allIngredients());
   let q = Cake.collection();
 
   searchForm.handle(req, {
@@ -96,7 +74,7 @@ router.get("/", checkIfAuthenticated, async (req, res) => {
 
 // CRUD - CREATE
 router.get("/create", checkIfAuthenticated, async (req, res) => {
-  const cakeForm = createCakeForm(await allSeasons(), await allIngredients());
+  const cakeForm = createCakeForm(await dataLayer.allSeasons(), await dataLayer.allIngredients());
   res.render("cakes/create.hbs", {
     form: cakeForm.toHTML(bootstrapField),
     cloudinaryName: process.env.CLOUDINARY_NAME,
@@ -107,7 +85,7 @@ router.get("/create", checkIfAuthenticated, async (req, res) => {
 router.post("/create", async (req, res) => {
   // need to check for the repeated name of base cake
   let cakes = await Cake.collection().fetch();
-  const cakeForm = createCakeForm(await allSeasons(), await allIngredients());
+  const cakeForm = createCakeForm(await dataLayer.allSeasons(), await dataLayer.allIngredients());
   cakeForm.handle(req, {
     success: async (form) => {
       for (let oneCake of cakes.toJSON()) {
@@ -152,7 +130,7 @@ router.get("/:cake_id/update", checkIfAuthenticated, async (req, res) => {
     withRelated: ["ingredients"],
   });
 
-  const cakeForm = createCakeForm(await allSeasons(), await allIngredients());
+  const cakeForm = createCakeForm(await dataLayer.allSeasons(), await dataLayer.allIngredients());
   cakeForm.fields.name.value = cake.get("name");
   cakeForm.fields.waittime.value = cake.get("waittime");
   cakeForm.fields.description.value = cake.get("description");
@@ -179,7 +157,7 @@ router.post("/:cake_id/update", async (req, res) => {
     withRelated: ["ingredients"],
   });
 
-  const cakeForm = createCakeForm();
+  const cakeForm = createCakeForm(await dataLayer.allSeasons(), await dataLayer.allIngredients());
   cakeForm.handle(req, {
     success: async (form) => {
       let { ingredients, ...cakeData } = form.data;
