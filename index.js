@@ -7,7 +7,7 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const FileStore = require("session-file-store")(session);
 const csrf = require("csurf");
-
+const cors = require('cors')
 
 // create an instance of express app
 let app = express();
@@ -31,6 +31,14 @@ app.use(
   })
 );
 
+app.use(cors());
+
+app.use(session({
+  secret: process.env.SESSION_SECRET_KEY,
+  resave: false,
+  saveUninitialized: true
+}))
+
 const landingRoutes = require("./routes/landing");
 const cakeRoutes = require("./routes/cakes");
 const productRoutes = require("./routes/products");
@@ -38,23 +46,15 @@ const userRoutes = require("./routes/users");
 const cloudinaryRoutes = require('./routes/cloudinary')
 const cartRoutes = require('./routes/shoppingCart');
 const { checkIfAuthenticated } = require("./middlewares");
-const checkoutRoutes  = require("./routes/api/checkout");
+// const checkoutRoutes  = require("./routes/api/checkout");
 
 const api = {
   products: require('./routes/api/products'),
-  cart: require('./routes/api/cart')
+  cart: require('./routes/api/cart'),
+  checkout: require('./routes/api/checkout')
 }
 
 async function main() {
-  // set up sessions
-  app.use(
-    session({
-      // store: new FileStore(),
-      secret: process.env.SESSION_SECRET_KEY,
-      resave: false,
-      saveUninitialized: true,
-    })
-  );
 
   // Register Flash middleware
   app.use(function (req, res, next) {
@@ -113,7 +113,7 @@ async function main() {
   app.use("/users", userRoutes);
   app.use('/cloudinary', cloudinaryRoutes);
   app.use('/cart',checkIfAuthenticated, cartRoutes);
-  app.use('/checkout', checkoutRoutes);
+  app.use('/api/checkout', api.checkout);
   app.use('/api/products',express.json(), api.products);
   app.use('/api/cart', express.json(), api.cart);
 }

@@ -63,12 +63,20 @@ const Order = bookshelf.model('Order', {
         return this.belongsTo('User')
     }
 })
+const Purchase = bookshelf.model('Purchase', {
+    tableName: 'purchases',
+    product(){
+        return this.belongsTo('Product')
+    },
+    user(){
+        return this.belongsTo('User')
+    },
+    order(){
+        return this.belongsTo('Order')
+    }
+})
 
 
 
 
-
-
-
-
-module.exports = { Cake, Season, Ingredient, Product, Cakesize, User, Cartitem, Order };
+module.exports = { Cake, Season, Ingredient, Product, Cakesize, User, Cartitem, Order, Purchase };

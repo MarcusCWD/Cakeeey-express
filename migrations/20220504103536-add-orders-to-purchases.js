@@ -15,7 +15,7 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up =  function(db) {
-  return db.addColumn('purchases', 'orders_id', {
+  return db.addColumn('purchases', 'order_id', {
       type: 'int',
       notNull : true,
       foreignKey: {
