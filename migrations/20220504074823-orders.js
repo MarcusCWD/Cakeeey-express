@@ -15,14 +15,18 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('seasons',{
-    id: { type: 'int', primaryKey:true, autoIncrement:true, unsigned: true},
-    name: { type: 'string', length:100, notNull:true},
+  return db.createTable('orders',{
+    id: { type: 'int', primaryKey:true, autoIncrement:true},
+    date: {type: 'date', notNull: false},
+    totalprice: {type: 'int', notNull:true},
+    firstname: {type: 'string', length:50, notNull:true },
+    lastname: {type: 'string', length:50, notNull:true},
+    address: {type: 'string', length:100, notNull:true},
 })
 };
 
 exports.down = function(db) {
-  return db.dropTable('seasons');
+return db.dropTable('orders');
 };
 
 exports._meta = {

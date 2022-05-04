@@ -38,10 +38,11 @@ const userRoutes = require("./routes/users");
 const cloudinaryRoutes = require('./routes/cloudinary')
 const cartRoutes = require('./routes/shoppingCart');
 const { checkIfAuthenticated } = require("./middlewares");
-const checkoutRoutes  = require("./routes/checkout");
+const checkoutRoutes  = require("./routes/api/checkout");
 
 const api = {
-  products: require('./routes/api/products')
+  products: require('./routes/api/products'),
+  cart: require('./routes/api/cart')
 }
 
 async function main() {
@@ -69,7 +70,19 @@ async function main() {
   });
 
   // enable CSRF
-  app.use(csrf());
+  // app.use(csrf());
+  
+  const csurfInstance = csrf();
+  app.use(function(req,res,next){
+    console.log("checking for csrf exclusion")
+    if (req.url === '/checkout/process_payment' || req.url.slice(0,5)=="/api/") {
+      console.log("we enter next")
+      return next()
+  }
+    csurfInstance(req,res,next);
+  })
+  
+
   app.use(function (err, req, res, next) {
     if (err && err.code == "EBADCSRFTOKEN") {
       req.flash("error_messages", "The form has expired. Please try again");
@@ -80,10 +93,19 @@ async function main() {
   });
 
   // Share CSRF with hbs files
-  app.use(function (req, res, next) {
-    res.locals.csrfToken = req.csrfToken();
+  // app.use(function (req, res, next) {
+  //   res.locals.csrfToken = req.csrfToken();
+  //   next();
+  // });
+
+  app.use(function(req,res,next){
+    if (req.csrfToken) {
+        res.locals.csrfToken = req.csrfToken();
+    }
+    
     next();
-  });
+})
+
 
   app.use("/", landingRoutes);
   app.use("/cakes", cakeRoutes);
@@ -92,7 +114,8 @@ async function main() {
   app.use('/cloudinary', cloudinaryRoutes);
   app.use('/cart',checkIfAuthenticated, cartRoutes);
   app.use('/checkout', checkoutRoutes);
-  app.use('/api/products', api.products);
+  app.use('/api/products',express.json(), api.products);
+  app.use('/api/cart', express.json(), api.cart);
 }
 
 main();

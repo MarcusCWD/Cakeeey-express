@@ -14,15 +14,24 @@ exports.setup = function(options, seedLink) {
   seed = seedLink;
 };
 
-exports.up = function(db) {
-  return db.createTable('seasons',{
-    id: { type: 'int', primaryKey:true, autoIncrement:true, unsigned: true},
-    name: { type: 'string', length:100, notNull:true},
-})
-};
+exports.up =  function(db) {
+  return db.addColumn('purchases', 'orders_id', {
+      type: 'int',
+      notNull : true,
+      foreignKey: {
+          name: 'purchase_order_fk',
+          table: 'orders',
+          rules: {
+              onDelete:'cascade',
+              onUpdate:'restrict'
+          },
+          mapping: 'id'
+      }
+  })
+}
 
 exports.down = function(db) {
-  return db.dropTable('seasons');
+  return null;
 };
 
 exports._meta = {

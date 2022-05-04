@@ -15,14 +15,14 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('seasons',{
-    id: { type: 'int', primaryKey:true, autoIncrement:true, unsigned: true},
-    name: { type: 'string', length:100, notNull:true},
+  return db.createTable('purchases',{
+    id: { type: 'int', primaryKey:true, autoIncrement:true},
+    quantity: { type: "int", unsigned: true },
 })
 };
 
 exports.down = function(db) {
-  return db.dropTable('seasons');
+return db.dropTable('purchases');
 };
 
 exports._meta = {
