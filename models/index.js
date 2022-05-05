@@ -34,6 +34,9 @@ const Product = bookshelf.model('Product', {
     },
     cartitems(){
         return this.hasMany('Cartitem')
+    },
+    purchases(){
+        return this.hasMany('Purchase')
     }
 });
 const Cakesize = bookshelf.model('Cakesize', {
@@ -49,6 +52,9 @@ const User = bookshelf.model('User',{
     },
     orders(){
         return this.hasMany('Order')
+    },
+    purchases(){
+        return this.hasMany('Purchase')
     }
 });
 const Cartitem = bookshelf.model('Cartitem', {
@@ -61,6 +67,9 @@ const Order = bookshelf.model('Order', {
     tableName: 'orders',
     users(){
         return this.belongsTo('User')
+    },
+    purchases(){
+        return this.hasMany('Purchase')
     }
 })
 const Purchase = bookshelf.model('Purchase', {
