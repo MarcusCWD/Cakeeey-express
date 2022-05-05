@@ -95,12 +95,10 @@ router.post("/process_payment", express.raw({ type: "application/json" }), async
         })
 
         let user_id = user.get("id")
-
         // Change Order Details of the last item and add in cost + status to 2 (Paid)
         let selectedOrder = await Order.where({
             "user_id": user_id
-        }).fetch()
-
+        }).query(i => i.orderBy("id", "DESC").limit(1)).fetch()
         selectedOrder.set("totalprice", event.data.object.amount_total)
         selectedOrder.set("status_id", 2)
         await selectedOrder.save()
@@ -113,7 +111,6 @@ router.post("/process_payment", express.raw({ type: "application/json" }), async
             newPurchase.set("user_id", selectedOrder.get("user_id"))
             newPurchase.save()
         }
-
         // Delete items from cart
         // Find all items that matches
         const cartServices = new CartServices(user_id)

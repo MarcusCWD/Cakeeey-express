@@ -84,8 +84,12 @@ const Purchase = bookshelf.model('Purchase', {
         return this.belongsTo('Order')
     }
 })
+const BlacklistedToken = bookshelf.model('BlacklistedToken',{
+    tableName: 'blacklisted_tokens'
+})
 
 
 
 
-module.exports = { Cake, Season, Ingredient, Product, Cakesize, User, Cartitem, Order, Purchase };
+
+module.exports = { Cake, Season, Ingredient, Product, Cakesize, User, Cartitem, Order, Purchase, BlacklistedToken };
