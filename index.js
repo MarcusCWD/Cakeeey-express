@@ -46,12 +46,12 @@ const userRoutes = require("./routes/users");
 const cloudinaryRoutes = require('./routes/cloudinary')
 const cartRoutes = require('./routes/shoppingCart');
 const { checkIfAuthenticated } = require("./middlewares");
-// const checkoutRoutes  = require("./routes/api/checkout");
 
 const api = {
   products: require('./routes/api/products'),
   cart: require('./routes/api/cart'),
-  checkout: require('./routes/api/checkout')
+  checkout: require('./routes/api/checkout'),
+  user: require('./routes/api/user')
 }
 
 async function main() {
@@ -112,10 +112,11 @@ async function main() {
   app.use("/products", productRoutes);
   app.use("/users", userRoutes);
   app.use('/cloudinary', cloudinaryRoutes);
-  app.use('/cart',checkIfAuthenticated, cartRoutes);
+  app.use('/cart',checkIfAuthenticated, cartRoutes); // when we are done, we should remove this. only need the api route
   app.use('/api/checkout', api.checkout);
   app.use('/api/products',express.json(), api.products);
   app.use('/api/cart', express.json(), api.cart);
+  app.use('/api/user', express.json(), api.user);
 }
 
 main();
