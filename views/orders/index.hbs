@@ -1,0 +1,50 @@
+{{#extends 'base'}}
+
+{{#block 'content'}}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Paid(cents)</th>
+            <th>Status</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Items</th>
+            <th>Update Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each orders}}
+        <tr>
+            <td>
+                {{this.id}}
+            </td>
+            <td>
+                {{this.totalprice}}
+            </td>
+            <td>
+                {{this.status.status}}
+            </td>
+            <td>
+                {{this.firstname}} {{this.lastname}}
+            </td>
+            <td>
+                {{this.address}}
+            </td>
+            <td>
+                {{#each this.purchases}}
+                <ul>
+                    <li>{{this.product.cake.name}} {{this.product.cakesize.size}} cm ({{this.quantity}} qty)</li>
+                </ul>
+                {{/each}}
+            </td>
+            <td>
+                <a href="/orders/{{this.id}}/update" class="btn btn-primary btn-sm">Update</a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+{{/block}}
+
+{{/extends}}

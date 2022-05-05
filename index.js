@@ -45,6 +45,7 @@ const productRoutes = require("./routes/products");
 const userRoutes = require("./routes/users");
 const cloudinaryRoutes = require('./routes/cloudinary')
 const cartRoutes = require('./routes/shoppingCart');
+const orderRoutes = require('./routes/orders');
 const { checkIfAuthenticated } = require("./middlewares");
 
 const api = {
@@ -112,6 +113,7 @@ async function main() {
   app.use("/products", productRoutes);
   app.use("/users", userRoutes);
   app.use('/cloudinary', cloudinaryRoutes);
+  app.use('/orders', orderRoutes);
   app.use('/cart',checkIfAuthenticated, cartRoutes); // when we are done, we should remove this. only need the api route
   app.use('/api/checkout', api.checkout);
   app.use('/api/products',express.json(), api.products);

@@ -68,22 +68,32 @@ const Order = bookshelf.model('Order', {
     users(){
         return this.belongsTo('User')
     },
+    status(){
+        return this.belongsTo('Status')
+    },
     purchases(){
         return this.hasMany('Purchase')
     }
 })
+const Status = bookshelf.model('Status', {
+    tableName:'statuses',
+    orders(){
+        return this.hasMany('Order')
+    }
+});
 const Purchase = bookshelf.model('Purchase', {
-    tableName: 'purchases',
-    product(){
-        return this.belongsTo('Product')
-    },
+    tableName:'purchases',
     user(){
         return this.belongsTo('User')
     },
+    product(){
+        return this.belongsTo('Product')
+    },
     order(){
         return this.belongsTo('Order')
-    }
-})
+    },
+});
+
 const BlacklistedToken = bookshelf.model('BlacklistedToken',{
     tableName: 'blacklisted_tokens'
 })
@@ -92,4 +102,4 @@ const BlacklistedToken = bookshelf.model('BlacklistedToken',{
 
 
 
-module.exports = { Cake, Season, Ingredient, Product, Cakesize, User, Cartitem, Order, Purchase, BlacklistedToken };
+module.exports = { Cake, Season, Ingredient, Product, Cakesize, User, Cartitem, Order, Purchase, BlacklistedToken, Status };

@@ -20,7 +20,7 @@ exports.up =  function(db) {
       notNull : true,
       foreignKey: {
           name: 'order_status_fk',
-          table: 'status',
+          table: 'statuses',
           rules: {
               onDelete:'cascade',
               onUpdate:'restrict'

@@ -15,14 +15,14 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('status',{
+  return db.createTable('statuses',{
     id: { type: 'int', primaryKey:true, autoIncrement:true},
     status: { type: 'string', length:100, notNull:true},
 })
 };
 
 exports.down = function(db) {
-  return db.dropTable('status');
+  return db.dropTable('statuses');
 };
 
 exports._meta = {

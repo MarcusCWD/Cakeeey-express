@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const crypto = require('crypto');
-
+const { checkIfAuthenticated } = require("../middlewares");
 const getHashedPassword = (password) => {
     const sha256 = crypto.createHash('sha256');
     const hash = sha256.update(password).digest('base64');
@@ -13,6 +13,15 @@ const { User } = require('../models');
 
 const { createRegistrationForm, createLoginForm, bootstrapField } = require('../forms');
 
+// this route is used for the view of all users
+router.get('/',checkIfAuthenticated, async (req,res)=>{
+    let users = await User.collection().fetch();
+      res.render("users/index.hbs", {
+        'users': users.toJSON(),
+      });
+})
+
+// this route is to manually register new clients
 router.get('/register', (req,res)=>{
     // display the registration form
     const registerForm = createRegistrationForm();
@@ -20,6 +29,8 @@ router.get('/register', (req,res)=>{
         'form': registerForm.toHTML(bootstrapField)
     })
 })
+
+// this route is to manually register new clients
 router.post('/register', (req, res) => {
     const registerForm = createRegistrationForm();
     registerForm.handle(req, {
@@ -44,12 +55,15 @@ router.post('/register', (req, res) => {
     })
 })
 
+// this route is for the admin login
 router.get('/login', (req,res)=>{
     const loginForm = createLoginForm();
     res.render('users/login',{
         'form': loginForm.toHTML(bootstrapField)
     })
 })
+
+// this route is for the admin login
 router.post('/login', async (req, res) => {
     const loginForm = createLoginForm();
     loginForm.handle(req, {
@@ -93,6 +107,8 @@ router.post('/login', async (req, res) => {
         }
     })
 })
+
+// this route is for the admin login
 router.get('/profile', (req, res) => {
     const user = req.session.user;
     if (!user) {
@@ -104,6 +120,8 @@ router.get('/profile', (req, res) => {
         })
     }
 })
+
+// this route is for the admin logout
 router.get('/logout', (req, res) => {
     req.session.user = null;
     req.flash('success_messages', "Logged out successful");
