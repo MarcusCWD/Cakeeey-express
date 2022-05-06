@@ -8,7 +8,7 @@
             <th>Paid(cents)</th>
             <th>Status</th>
             <th>Name</th>
-            <th>Address</th>
+            <th>Delivery Address</th>
             <th>Items</th>
             <th>Update Status</th>
         </tr>
@@ -34,7 +34,7 @@
             <td>
                 {{#each this.purchases}}
                 <ul>
-                    <li>{{this.product.cake.name}} {{this.product.cakesize.size}} cm ({{this.quantity}} qty)</li>
+                    <li>Product Id {{this.product.id}} <br> {{this.product.cake.name}} {{this.product.cakesize.size}} cm ({{this.quantity}} qty)</li>
                 </ul>
                 {{/each}}
             </td>

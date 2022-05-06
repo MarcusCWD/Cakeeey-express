@@ -7,7 +7,6 @@ router.get("/:user_id", async (req, res) => {
     let userId = req.params.user_id
     let orders = await Order.where({
         "user_id": userId,
-        "status_id": 2 || 3 || 4 || 5 // show the items which are paid, making, on delivery, delivered
     }).fetchAll({
         require: false,
         withRelated: ["status"]

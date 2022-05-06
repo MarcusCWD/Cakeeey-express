@@ -205,6 +205,28 @@ const createSearchForm = (seasons, ingredients) => {
     })
 }
 
+const createOrderForm = (status) => {
+    return forms.create({
+        'status_id': fields.string({
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.select(),
+            choices: status
+        }),
+        'address': fields.string({
+            label: 'Delivery Address',
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+        })
+    })
+};
 
 
-module.exports = { createCakeForm, createProductForm, createRegistrationForm, createLoginForm, createSearchForm, bootstrapField };
+
+module.exports = { createCakeForm, createProductForm, createRegistrationForm, createLoginForm, createSearchForm, createOrderForm, bootstrapField };
