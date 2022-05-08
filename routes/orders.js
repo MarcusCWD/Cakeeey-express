@@ -15,7 +15,6 @@ router.get('/',checkIfAuthenticated, async (req,res)=>{
     }).fetch({
         withRelated: ["status", "purchases", "purchases.product", "purchases.product.cakesize", "purchases.product.cake"]
     });
-    console.log((orders.toJSON())[0].purchases[0])
       res.render("orders/index.hbs", {
         'orders': orders.toJSON(),
       });
