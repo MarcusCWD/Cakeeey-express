@@ -122,4 +122,13 @@ router.post("/process_payment", express.raw({ type: "application/json" }), async
     }
     res.sendStatus(200);
 })
+
+router.get('/success', async (req,res)=>{
+      res.render("checkout/success.hbs", {
+      });
+})
+router.get('/error', async (req,res)=>{
+    res.render("checkout/cancelled.hbs", {
+    });
+})
 module.exports = router;
