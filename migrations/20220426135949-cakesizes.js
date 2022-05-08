@@ -17,7 +17,7 @@ exports.setup = function(options, seedLink) {
 exports.up = function(db) {
   return db.createTable('cakesizes', {
       id: { type: 'int', primaryKey:true, autoIncrement:true, unsigned:true},
-      size: { type: 'int', length:50, notNull:true, unsigned:true},
+      size: { type: 'int', notNull:true, unsigned:true},
   })
 };
 
