@@ -9,7 +9,7 @@ const { bootstrapField, createOrderForm } = require("../forms");
 const dataLayer = require('../dal/orders')
 
 // this route is used for the view of all users
-router.get('/', async (req,res)=>{
+router.get('/',checkIfAuthenticated, async (req,res)=>{
     let orders = await Order.collection().where({
         // status_id: 3
     }).fetch({
@@ -22,7 +22,7 @@ router.get('/', async (req,res)=>{
 })
 
 // CRUD - UPDATE
-router.get("/:order_id/update", async (req, res) => {
+router.get("/:order_id/update",checkIfAuthenticated, async (req, res) => {
   const orderId = req.params.order_id;
   const order = await Order.where({
     id: orderId,

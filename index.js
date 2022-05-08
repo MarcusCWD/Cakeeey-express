@@ -52,7 +52,8 @@ const api = {
   products: require('./routes/api/products'),
   cart: require('./routes/api/cart'),
   checkout: require('./routes/api/checkout'),
-  user: require('./routes/api/user')
+  user: require('./routes/api/user'),
+  order: require('./routes/api/order')
 }
 
 async function main() {
@@ -119,10 +120,11 @@ async function main() {
   app.use('/api/products',express.json(), api.products);
   app.use('/api/cart', express.json(), api.cart);
   app.use('/api/user', express.json(), api.user);
+  app.use('/api/order', express.json(), api.order);
 }
 
 main();
 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
   console.log("Server has started");
 });
