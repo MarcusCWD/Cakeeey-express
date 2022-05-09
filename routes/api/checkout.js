@@ -3,7 +3,6 @@ const { checkIfAuthenticated } = require('../../middlewares');
 const router = express.Router();
 const { User, Order, Purchase } = require("../../models")
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
-// const bodyParser = require("body-parser")
 
 const CartServices = require('../../services/cart_services')
 
