@@ -17,7 +17,7 @@ router.get('/cakes', async(req,res)=>{
     let q = Cake.collection();
     const allCakes = await q.fetch({
         require: false,
-        withRelated: ["season"]
+        withRelated: ["season", "products", "products.cakesize", "ingredients"]
     })
     res.send(allCakes)
 })
