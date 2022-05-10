@@ -16,7 +16,8 @@ router.get('/', async(req,res)=>{
 router.get('/cakes', async(req,res)=>{
     let q = Cake.collection();
     const allCakes = await q.fetch({
-        require: false
+        require: false,
+        withRelated: ["season"]
     })
     res.send(allCakes)
 })
@@ -79,6 +80,17 @@ router.get("/search", async (req, res) => {
         }
     }
     res.send([...arrSearchCake1,...arrSearchCake2])
+})
+
+
+// READ all possible product variant combination
+router.get('/seasons', async(req,res)=>{
+    let q = Season.collection();
+    const allSeason = await q.fetch({
+        require: false,
+        withRelated: ["cakes"]
+    })
+    res.send(allSeason)
 })
 
 module.exports = router;
