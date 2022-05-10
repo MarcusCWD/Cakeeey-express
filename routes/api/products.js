@@ -22,6 +22,18 @@ router.get('/cakes', async(req,res)=>{
     res.send(allCakes)
 })
 
+// READ one product variant combination
+router.get('/cakes/:cake_id', async(req,res)=>{
+    let q = Cake.collection();
+    const allCakes = await q.where({
+        "id": req.params.cake_id
+    }).fetch({
+        require: false,
+        withRelated: ["season", "products", "products.cakesize", "ingredients"]
+    })
+    res.send(allCakes)
+})
+
 // READ the search results for the base cakes
 // use the base cake data because we will not want the duplication of cakes
 // can do a comparision on the front end with the products
