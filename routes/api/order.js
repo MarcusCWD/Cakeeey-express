@@ -4,7 +4,7 @@ const { Order, Purchase } = require("../../models")
 const { checkIfAuthenticatedJWT } = require("../../middlewares");
 
 // we can get the user order id from this route
-router.get("/:user_id/user",checkIfAuthenticatedJWT, async (req, res) => {
+router.get("/:user_id/user", async (req, res) => {
     let userId = req.params.user_id
     if(!userId){
         res.send("Nothing")
