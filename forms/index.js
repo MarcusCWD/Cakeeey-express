@@ -203,6 +203,7 @@ const createSearchForm = (seasons, ingredients) => {
             choices: ingredients
         }),
     })
+    
 }
 
 const createOrderForm = (status) => {
@@ -221,6 +222,7 @@ const createOrderForm = (status) => {
             required: true,
             errorAfterField: true,
             cssClasses: {
+
                 label: ['form-label']
             },
         })
