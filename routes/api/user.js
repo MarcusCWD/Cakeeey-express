@@ -9,8 +9,6 @@ const generateAccessToken = (user, secret, expiresIn) => {
     {
     'id': user.id,
     'email': user.email,
-    'firstname': user.firstname,
-    'lastname': user.lastname
     },
     secret,
     {
