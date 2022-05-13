@@ -10,6 +10,7 @@ const checkIfAuthenticated = (req, res, next) => {
 }
 
 const checkIfAuthenticatedJWT = (req, res, next) => {
+
     const authHeader = req.headers.authorization;
 
     if (authHeader) {
@@ -20,6 +21,7 @@ const checkIfAuthenticatedJWT = (req, res, next) => {
             if (err) {
                 return res.sendStatus(403);
             }
+            console.log(authHeader, "asdasdasdasdasojikbeiofhb")
 
             req.user = user;
             next();
