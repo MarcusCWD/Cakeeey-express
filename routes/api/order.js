@@ -1,15 +1,20 @@
 const express = require("express")
 const router = express.Router()
 const { Order, Purchase } = require("../../models")
+const { checkIfAuthenticatedJWT } = require("../../middlewares");
 
 // we can get the user order id from this route
-router.get("/:user_id/user", async (req, res) => {
+router.get("/:user_id/user",checkIfAuthenticatedJWT, async (req, res) => {
     let userId = req.params.user_id
+    if(!userId){
+        res.send("Nothing")
+    }
+    
     let orders = await Order.where({
         "user_id": userId,
     }).fetchAll({
         require: false,
-        withRelated: ["status", "purchases",  "purchases.product", "purchases.product.cake", "purchases.product.cakesize"]
+        withRelated: ["purchases","purchases.status",  "purchases.product", "purchases.product.cake", "purchases.product.cakesize"]
     })
     if (orders) {
         res.send(orders)
