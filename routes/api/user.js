@@ -8,7 +8,7 @@ const generateAccessToken = (user, secret, expiresIn) => {
   return jwt.sign(
     {
     'id': user.id,
-    'email': user.email,
+    'email': user.email
     },
     secret,
     {
