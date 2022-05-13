@@ -14,7 +14,7 @@ router.get("/:user_id/user",checkIfAuthenticatedJWT, async (req, res) => {
         "user_id": userId,
     }).fetchAll({
         require: false,
-        withRelated: ["purchases","purchases.status",  "purchases.product", "purchases.product.cake", "purchases.product.cakesize"]
+        withRelated: ["purchases", "purchases.product", "purchases.product.cake", "purchases.product.cakesize"]
     })
     if (orders) {
         res.send(orders)
