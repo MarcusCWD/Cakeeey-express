@@ -22,7 +22,7 @@ router.get("/:user_id", async (req, res) => {
 
 //CREATE item into user's shopping cart
 //note that the internal function addToCart has the update and create function
-router.post("/:user_id/:product_id/add", checkIfAuthenticatedJWT, async (req, res) => {
+router.post("/:user_id/:product_id/add", async (req, res) => {
     let cartServices = new CartServices(req.params.user_id)
     try {
         await cartServices.addToCart(req.params.product_id, 1)
