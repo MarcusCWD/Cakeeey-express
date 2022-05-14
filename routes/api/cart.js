@@ -2,6 +2,8 @@ const express = require("express")
 const router = express.Router();
 // const { Cartitem } = require("../../models")
 const CartServices = require("../../services/cart_services")
+const { checkIfAuthenticatedJWT } = require("../../middlewares");
+
 
 // READ all the cartitems based on the user_id
 // this route will be ran everytime we do a post such that
@@ -20,10 +22,10 @@ router.get("/:user_id", async (req, res) => {
 
 //CREATE item into user's shopping cart
 //note that the internal function addToCart has the update and create function
-router.post("/:user_id/:product_id/add", async (req, res) => {
+router.post("/:user_id/:product_id/add", checkIfAuthenticatedJWT, async (req, res) => {
     let cartServices = new CartServices(req.params.user_id)
     try {
-        await cartServices.addToCart(req.params.product_id, req.query.quantity)
+        await cartServices.addToCart(req.params.product_id, 1)
         res.status(200)
         res.send("Item quantity updated.")
     } catch (e) {
