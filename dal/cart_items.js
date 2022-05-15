@@ -11,7 +11,7 @@ const allCart = async (userId) => {
     });
 };
 const allCartItemByUserAndProduct = async (userId, productId) => {
-  return await Cartitem.where({
+  return await Cartitem.collection().where({
     user_id: userId,
     product_id: productId,
   }).fetch({
