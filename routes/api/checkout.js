@@ -8,7 +8,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
 const CartServices = require('../../services/cart_services')
 
 
-router.get('/:user_id',checkIfAuthenticatedJWT, async (req, res) => {
+router.get('/:user_id', async (req, res) => {
     const cart = new CartServices(req.params.user_id);
     // get all the items from the cart
     let items = await cart.getCart();
