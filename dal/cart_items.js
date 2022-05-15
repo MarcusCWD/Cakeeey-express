@@ -7,16 +7,15 @@ const allCart = async (userId) => {
     })
     .fetch({
       require: false,
-      withRelated: ["product", "product.cake", "product.cake.season"],
+      withRelated: ["product", "product.cake", "product.cake.season", "product.cakesize"],
     });
 };
 const allCartItemByUserAndProduct = async (userId, productId) => {
-  return await Cartitem.collection().where({
+  return await Cartitem.where({
     user_id: userId,
     product_id: productId,
   }).fetch({
     require: false,
-    withRelated: ["product.cakesize"]
   });
 };
 async function createCartItem(userId, productId, quantity) {
