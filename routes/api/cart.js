@@ -35,7 +35,7 @@ router.post("/:user_id/:product_id/add", async (req, res) => {
 })
 
 // UPDATE qty of item
-router.post("/:user_id/:product_id/:qty/updateqty", async (req, res) => {
+router.post("/:user_id/:product_id/update", async (req, res) => {
     let cartServices = new CartServices(req.params.user_id);
     try{
         await cartServices.setQuantity(req.params.product_id, req.body.newQuantity);
