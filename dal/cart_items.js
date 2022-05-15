@@ -40,7 +40,7 @@ async function updateQuantity(userId, productId, newQuantity) {
     if (cartitem) {
         cartitem.set('quantity', newQuantity);
         await cartitem.save();
-        return true;
+        return cartitem;
     }
     return false;
 }
