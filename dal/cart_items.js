@@ -16,6 +16,7 @@ const allCartItemByUserAndProduct = async (userId, productId) => {
     product_id: productId,
   }).fetch({
     require: false,
+    withRelated: ["product.cakesize"]
   });
 };
 async function createCartItem(userId, productId, quantity) {
