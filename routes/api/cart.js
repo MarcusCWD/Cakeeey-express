@@ -27,12 +27,25 @@ router.post("/:user_id/:product_id/add", async (req, res) => {
     try {
         await cartServices.addToCart(req.params.product_id, 1)
         res.status(200)
-        res.send("Item quantity updated.")
+        res.send("Item added.")
     } catch (e) {
         res.status(204)
         res.send("Item not found.")
     }
 })
+
+// UPDATE qty of item
+router.post("/:user_id/:product_id/:qty/updateqty", async (req, res) => {
+    let cartServices = new CartServices(req.params.user_id);
+    try{
+        await cartServices.setQuantity(req.params.product_id, req.body.newQuantity);
+        res.status(200)
+        res.send("Item quantity updated.")
+    }catch(e){
+        res.status(204)
+        res.send("Item not found.")
+    }
+  });
 
 // DESTROY item in cart for user
 router.post("/:user_id/:product_id/delete", async (req, res) => {

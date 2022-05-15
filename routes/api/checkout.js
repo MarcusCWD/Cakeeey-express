@@ -1,5 +1,6 @@
 const express = require('express');
 const { checkIfAuthenticated } = require('../../middlewares');
+const { checkIfAuthenticatedJWT } = require("../../middlewares");
 const router = express.Router();
 const { User, Order, Purchase } = require("../../models")
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
@@ -7,15 +8,15 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
 const CartServices = require('../../services/cart_services')
 
 
-router.get('/',checkIfAuthenticated, async (req, res) => {
-    const cart = new CartServices(req.session.user.id);
+router.get('/:user_id',checkIfAuthenticatedJWT, async (req, res) => {
+    const cart = new CartServices(req.params.user_id);
     // get all the items from the cart
     let items = await cart.getCart();
 
     // Create a new row in Order with status 1 (Processing)
     const newOrder = new Order()
     let user = await User.where({
-        "id": req.session.user.id
+        "id": req.params.user_id
     }).fetch()
 
     newOrder.set("user_id", user.get("id"))
