@@ -143,10 +143,6 @@ router.post("/register", async (req, res) => {
             console.log("email")
             flag = 1
           }
-          if ( req.body.password > 255 || req.body.password< 10){
-            console.log("password")
-            flag = 1
-          }
           console.log(flag)
           if (flag = 0){
             user.set("firstname", req.body.firstname)
