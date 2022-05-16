@@ -128,8 +128,6 @@ router.post("/register", async (req, res) => {
       res.send("Email already in used")
   } else {
       try {
-          // Add user into table
-          const user = new User()
           let flag = 0
           if(req.body.firstname < 2 ||  req.body.firstname > 45 ){
             console.log("firstname")
@@ -143,7 +141,14 @@ router.post("/register", async (req, res) => {
             console.log("email")
             flag = 1
           }
+
           console.log(flag)
+          if(flag = 1){
+            res.send("Unable to create user")
+          }
+          // Add user into table
+          const user = new User()
+      
           if (flag = 0){
             user.set("firstname", req.body.firstname)
             user.set("lastname", req.body.lastname)
@@ -155,9 +160,6 @@ router.post("/register", async (req, res) => {
 
             // send back ok
             res.send(user)
-          }
-          else if(flag = 1){
-            res.send("Unable to create user")
           }
       } catch (e) {
           console.log(e)
