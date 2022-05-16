@@ -132,15 +132,19 @@ router.post("/register", async (req, res) => {
           const user = new User()
           let flag = 0
           if(req.body.firstname < 2 ||  req.body.firstname > 45 ){
+            console.log("firstname")
             flag = 1
           }
           if (req.body.lastname < 2 ||  req.body.lastname > 45 ){
+            console.log("lastname")
             flag = 1
           }
           if (validateEmail(req.body.email) == false){
+            console.log("email")
             flag = 1
           }
           if ( req.body.password > 255 || req.body.password< 10){
+            console.log("password")
             flag = 1
           }
           console.log(flag)
