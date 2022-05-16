@@ -111,6 +111,12 @@ router.post('/logout', async (req, res) => {
 })
 
 router.post("/register", async (req, res) => {
+
+  function validateEmail(email) {
+    let regExpression = /\S+@\S+\.\S+/;
+    return regExpression.test(email);
+  }
+
   // Check if email is already in use
   let checkEmail = await User.where({
       "email": req.body.email
@@ -124,19 +130,38 @@ router.post("/register", async (req, res) => {
       try {
           // Add user into table
           const user = new User()
-          user.set("firstname", req.body.firstname)
-          user.set("lastname", req.body.lastname)
-          user.set("email", req.body.email)
-          user.set("password", getHashedPassword(req.body.password))
-          user.set("address", req.body.address)
-          user.set("role", 'user')
-          await user.save()
+          let flag = 0
+          if(req.body.firstname < 2 ||  req.body.firstname > 45 ){
+            flag = 1
+          }
+          if (req.body.lastname < 2 ||  req.body.lastname > 45 ){
+            flag = 1
+          }
+          if (validateEmail(req.body.email) == false){
+            flag = 1
+          }
+          if ( req.body.password > 255 || req.body.password< 10){
+            flag = 1
+          }
+          console.log(flag)
+          if (flag = 0){
+            user.set("firstname", req.body.firstname)
+            user.set("lastname", req.body.lastname)
+            user.set("email", req.body.email)
+            user.set("password", getHashedPassword(req.body.password))
+            user.set("address", req.body.address)
+            user.set("role", 'user')
+            await user.save()
 
-          // send back ok
-          res.send(user)
+            // send back ok
+            res.send(user)
+          }
+          else if(flag = 1){
+            res.send("Unable to create user")
+          }
       } catch (e) {
           console.log(e)
-          res.send("Unable to create user")
+          res.send("error")
       }
   }
 })
