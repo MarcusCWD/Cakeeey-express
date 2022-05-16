@@ -112,44 +112,13 @@ router.post('/logout', async (req, res) => {
 
 router.post("/register", async (req, res) => {
 
-  function validateEmail(email) {
-    let regExpression = /\S+@\S+\.\S+/;
-    return regExpression.test(email);
-  }
 
-  // Check if email is already in use
-  let checkEmail = await User.where({
-      "email": req.body.email
-  }).fetch({
-      require: false
-  })
-
-  if (checkEmail) {
-      res.send("Email already in used")
-  } else {
       try {
-          let flag = 0
-          if(req.body.firstname < 2 ||  req.body.firstname > 45 ){
-            console.log("firstname")
-            flag = 1
-          }
-          if (req.body.lastname < 2 ||  req.body.lastname > 45 ){
-            console.log("lastname")
-            flag = 1
-          }
-          if (validateEmail(req.body.email) == false){
-            console.log("email")
-            flag = 1
-          }
-
-          console.log(flag)
-          if(flag = 1){
-            res.send("Unable to create user")
-          }
+         
           // Add user into table
           const user = new User()
       
-          if (flag = 0){
+          
             user.set("firstname", req.body.firstname)
             user.set("lastname", req.body.lastname)
             user.set("email", req.body.email)
@@ -161,11 +130,11 @@ router.post("/register", async (req, res) => {
             // send back ok
             res.send(user)
           }
-      } catch (e) {
+       catch (e) {
           console.log(e)
           res.send("error")
       }
-  }
+  
 })
 
 module.exports = router;
