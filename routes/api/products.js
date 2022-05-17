@@ -47,8 +47,8 @@ router.get("/search", async (req, res) => {
     let arrSearchCake1 = [];
 
     // first query the season name
-    if (req.query.season) {
-        querySeason = querySeason.where("name", "like", "%" + req.query.season + "%")
+    if (req.body.season) {
+        querySeason = querySeason.where("name", "like", "%" + req.body.season + "%")
     }
     const searchSeason = await querySeason.fetch({
         require: false,
@@ -70,8 +70,8 @@ router.get("/search", async (req, res) => {
 
 
     // if the input field not empty
-    if (req.query.name) {
-        queryName = queryName.where("name", "like", "%" + req.query.name + "%") 
+    if (req.body.name) {
+        queryName = queryName.where("name", "like", "%" + req.body.name + "%") 
     }
     searchCake1 = await queryName.fetch({
         require: false,
