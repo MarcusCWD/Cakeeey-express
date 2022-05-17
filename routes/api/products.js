@@ -37,7 +37,7 @@ router.get('/cakes/:cake_id', async(req,res)=>{
 // READ the search results for the base cakes
 // use the base cake data because we will not want the duplication of cakes
 // can do a comparision on the front end with the products
-router.get("/search", async (req, res) => {
+router.post("/search", async (req, res) => {
     let checkSeason = Cake.collection();
     let queryName = Cake.collection();
     let querySeason = Season.collection();
