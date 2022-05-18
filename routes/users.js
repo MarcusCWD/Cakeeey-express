@@ -22,7 +22,7 @@ router.get('/',checkIfAuthenticated, async (req,res)=>{
 })
 
 // this route is to manually register new clients
-router.get('/register', (req,res)=>{
+router.get('/register', checkIfAuthenticated, (req,res)=>{
     // display the registration form
     const registerForm = createRegistrationForm();
     res.render('users/register.hbs', {
