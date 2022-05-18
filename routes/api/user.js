@@ -8,7 +8,8 @@ const generateAccessToken = (user, secret, expiresIn) => {
   return jwt.sign(
     {
     'id': user.id,
-    'email': user.email
+    'email': user.email,
+    'address': user.address
     },
     secret,
     {
@@ -34,7 +35,6 @@ router.post("/login", async (req, res) => {
     const userObject = {
       email: user.get("email"),
       id: user.get("id"),
-      address: user.get("address")
     };
     let accessToken = generateAccessToken(
       userObject,
