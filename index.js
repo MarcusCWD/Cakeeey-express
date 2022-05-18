@@ -40,6 +40,8 @@ app.use(session({
   saveUninitialized: true
 }))
 
+app.use("/public", express.static('public')); 
+
 const landingRoutes = require("./routes/landing");
 const cakeRoutes = require("./routes/cakes");
 const productRoutes = require("./routes/products");
