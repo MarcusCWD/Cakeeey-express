@@ -34,6 +34,7 @@ router.post("/login", async (req, res) => {
     const userObject = {
       email: user.get("email"),
       id: user.get("id"),
+      address: user.get("address")
     };
     let accessToken = generateAccessToken(
       userObject,
