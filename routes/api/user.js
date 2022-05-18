@@ -58,10 +58,20 @@ router.post("/login", async (req, res) => {
 });
 
 // read the profile if condition of middleware is met
-router.get("/profile", checkIfAuthenticatedJWT, async (req, res) => {
-  const user = req.user;
-  res.send(user);
-});
+// router.get("/profile", checkIfAuthenticatedJWT, async (req, res) => {
+//   const user = req.user;
+//   res.send(user);
+// });
+
+router.get('/profile', checkIfAuthenticatedJWT, async function(req,res) {
+  let user = await User.where({
+      'id': req.user.id
+  }).fetch({
+      require: true
+  });
+
+  res.send(user)
+})
 
 router.post('/refresh', async(req,res)=>{
     let refreshToken = req.body.refreshToken;
