@@ -120,7 +120,9 @@ router.get("/:product_id/delete", checkIfAuthenticated, async (req, res) => {
     id: req.params.product_id,
   }).fetch({
     require: true,
+    withRelated: ["purchase.order"],
   });
+  console.log(product)
   res.render("products/delete.hbs", {
     product: product.toJSON(),
   });
