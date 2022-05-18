@@ -194,10 +194,16 @@ router.get("/:cake_id/delete", checkIfAuthenticated, async (req, res) => {
     id: req.params.cake_id,
   }).fetch({
     require: true,
+    withRelated: ["products"],
   });
-
+  let cakes = cake.toJSON()
+  let message = ""
+  if(cakes.products.length > 0){
+    message = "You can not delete this base cake away"
+  }
   res.render("cakes/delete", {
     cake: cake.toJSON(),
+    message: message
   });
 });
 router.post("/:cake_id/delete", async (req, res) => {

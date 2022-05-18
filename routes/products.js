@@ -120,11 +120,16 @@ router.get("/:product_id/delete", checkIfAuthenticated, async (req, res) => {
     id: req.params.product_id,
   }).fetch({
     require: true,
-    withRelated: ["purchase.order"],
+    withRelated: ["purchases.order"],
   });
-  console.log(product)
+  let products = product.toJSON()
+  let message = ""
+  if(products.purchases.length > 0){
+    message = "You can not delete this product away"
+  }
   res.render("products/delete.hbs", {
     product: product.toJSON(),
+    message: message
   });
 });
 router.post("/:product_id/delete", async (req, res) => {
