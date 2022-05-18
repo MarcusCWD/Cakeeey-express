@@ -21,8 +21,6 @@ const checkIfAuthenticatedJWT = (req, res, next) => {
             if (err) {
                 return res.sendStatus(403);
             }
-            console.log(authHeader, "asdasdasdasdasojikbeiofhb")
-
             req.user = user;
             next();
         });

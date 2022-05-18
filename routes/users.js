@@ -41,7 +41,7 @@ router.post('/register', (req, res) => {
                 'email': form.data.email,
                 'address': form.data.address,
                 'password': getHashedPassword(form.data.password),
-                'role' : 'user'
+                'role' : 'admin'
             });
             await user.save();
             req.flash("success_messages", "User signed up successfully!");
@@ -72,7 +72,8 @@ router.post('/login', async (req, res) => {
 
             // ...find the user by email and password
             let user = await User.where({
-                'email': form.data.email
+                'email': form.data.email,
+                'role' : 'admin'
             }).fetch({
                require:false}
             );
