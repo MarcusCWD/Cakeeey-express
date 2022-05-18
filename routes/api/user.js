@@ -112,14 +112,9 @@ router.post('/logout', async (req, res) => {
 })
 
 router.post("/register", async (req, res) => {
-
-
       try {
-         
           // Add user into table
           const user = new User()
-      
-          
             user.set("firstname", req.body.firstname)
             user.set("lastname", req.body.lastname)
             user.set("email", req.body.email)
@@ -135,7 +130,6 @@ router.post("/register", async (req, res) => {
           console.log(e)
           res.send("error")
       }
-  
 })
 
 module.exports = router;

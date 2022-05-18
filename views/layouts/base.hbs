@@ -10,13 +10,13 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-  <title>Hello, world!</title>
+  <title>Cakeeey</title>
 </head>
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Cakeeey.</a>
+      <a class="navbar-brand" href="/">Cakeeey.</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -51,7 +51,8 @@
       </div>
     </div>
   </nav>
-  <div class="container">
+  {{#block 'landing'}}{{/block}}
+  <div class="w-75 mx-auto">
     {{#if success_messages }}
     {{#each success_messages}}
     <div class="alert alert-success">
@@ -69,10 +70,7 @@
     {{/if}}
     {{#block 'content'}}{{/block}}
   </div>
-  {{!-- <div style="background-image: url('./dough-with-rolling-pin-egg-carton.jpg'); height: 1000px;"></div> --}}
 
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>
