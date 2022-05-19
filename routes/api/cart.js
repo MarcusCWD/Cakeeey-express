@@ -2,7 +2,6 @@ const express = require("express")
 const router = express.Router();
 // const { Cartitem } = require("../../models")
 const CartServices = require("../../services/cart_services")
-const { checkIfAuthenticatedJWT } = require("../../middlewares");
 
 
 // READ all the cartitems based on the user_id
