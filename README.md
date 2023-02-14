@@ -1,6 +1,6 @@
 #  Cakeeey Admin Site and RESTful API
 
-The Admin site is used for product and order management. The management site can be found [here](https://cakeeey.herokuapp.com)
+The Admin site is used for product and order management. The management site can be found [here](https://cakeeey.onrender.com)
 
 ## Context
 
@@ -37,7 +37,7 @@ Get | /api/products/seasons | Obtain all season infomation
 
 - [Postgres](https://www.postgresql.org/)
 
-  Heroku deployment natively uses postgres
+  Render deployment natively uses postgres
 
 - [MySql](https://www.mysql.com/)
 
@@ -53,9 +53,9 @@ Get | /api/products/seasons | Obtain all season infomation
 
 # Deployment
 
-- [Heroku](https://dashboard.heroku.com/)
+- [Render](https://dashboard.render.com/)
 
-  This API is deployed using Heroku.
+  This API is deployed using Render.
 
 # Acknowledgements
 
