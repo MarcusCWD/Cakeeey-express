@@ -47,14 +47,24 @@ router.get('/:user_id', async (req, res) => {
             lineItem.price_data.product_data['images'] = [item.related('product').related('cake').get('image_url')]
         }
         lineItems.push(lineItem);
+        // save the quantity data along with the product id
+        meta.push({
+            'product_id' : item.get('product_id'),
+            'quantity': item.get('quantity'),
+            "user_id": user.get("id")
+        })
     }
-    
+
     // step 2 - create stripe payment
+    let metaData = JSON.stringify(meta);
     const payment = {
         line_items: lineItems,
         mode: 'payment',
         success_url: process.env.STRIPE_SUCCESS_URL,
         cancel_url: process.env.STRIPE_ERROR_URL,
+        metadata: {
+            'orders': metaData
+        }
     }
 
     // step 3: register the session
