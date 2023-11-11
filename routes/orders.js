@@ -44,12 +44,10 @@ router.post("/:order_id/update", async (req, res) => {
   }).fetch({
     required: true,
   });
-  // console.log(order.toJSON())
   const orderForm = createOrderForm(await dataLayer.allStatus());
   orderForm.handle(req, {
     success: async (form) => {
       let formStore = {status_id: parseInt(form.data.status_id), address: form.data.address }
-      console.log(formStore)
       order.set(formStore);
       order.save();
       req.flash("success_messages", `Order has been updated`);

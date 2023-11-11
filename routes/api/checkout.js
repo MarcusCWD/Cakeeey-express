@@ -69,7 +69,6 @@ router.get('/:user_id', async (req, res) => {
 
     // step 3: register the session
     let stripeSession = await stripe.checkout.sessions.create(payment)
-    console.log(stripeSession)
     res.send({ stripe: stripeSession }); // in our new update, we pass back the redirect url to the client for redirection
 
     // res.render('checkout/checkout.hbs', {

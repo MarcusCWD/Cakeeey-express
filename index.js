@@ -79,9 +79,7 @@ async function main() {
   
   const csurfInstance = csrf();
   app.use(function(req,res,next){
-    console.log("checking for csrf exclusion")
     if (req.url === '/checkout/process_payment' || req.url.slice(0,5)=="/api/") {
-      console.log("we enter next")
       return next()
   }
     csurfInstance(req,res,next);
@@ -129,5 +127,5 @@ async function main() {
 main();
 
 app.listen(process.env.PORT, () => {
-  console.log("Server has started");
+  console.log("Server has started on application port: " + process.env.PORT);
 });
