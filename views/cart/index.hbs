@@ -9,7 +9,7 @@
         <h4>{{this.product.cake.name}}</h3>
             <h5>Category: {{this.product.cake.season.name}}</h5>
             <h5>Cost: {{this.product.price}} </h5>
-            <form method="POST" action="/cart/{{this.id}}/quantity/update">
+            <form method="POST" action="/cakeeeyadmin/cart/{{this.id}}/quantity/update">
                 <input type="hidden" value="{{../csrfToken}}" name="_csrf" />
                 <h5>
                     Quantity: <input type="text" name="newQuantity" value="{{this.quantity}}" style="width:30px" />
@@ -17,7 +17,7 @@
                 </h5>
             </form>
             <div>
-                <a href="/cart/{{this.product.id}}/remove" class="btn btn-danger">Remove</a>
+                <a href="/cakeeeyadmin/cart/{{this.product.id}}/remove" class="btn btn-danger">Remove</a>
             </div>
 
 

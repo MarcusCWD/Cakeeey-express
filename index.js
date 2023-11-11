@@ -110,13 +110,14 @@ async function main() {
 })
 
 
-  app.use("/", landingRoutes);
-  app.use("/cakes", cakeRoutes);
-  app.use("/products", productRoutes);
-  app.use("/users", userRoutes);
-  app.use('/cloudinary', cloudinaryRoutes);
-  app.use('/orders', orderRoutes);
-  app.use('/cart',checkIfAuthenticated, cartRoutes); // when we are done, we should remove this. only need the api route
+  app.use("/cakeeeyadmin", landingRoutes);
+  app.use("/cakeeeyadmin/cakes", cakeRoutes);
+  app.use("/cakeeeyadmin/products", productRoutes);
+  app.use("/cakeeeyadmin/users", userRoutes);
+  app.use('/cakeeeyadmin/cloudinary', cloudinaryRoutes);
+  app.use('/cakeeeyadmin/orders', orderRoutes);
+  app.use('/cakeeeyadmin/cart',checkIfAuthenticated, cartRoutes); // when we are done, we should remove this. only need the api route
+  
   app.use('/api/checkout', api.checkout);
   app.use('/api/products',express.json(), api.products);
   app.use('/api/cart', express.json(), api.cart);

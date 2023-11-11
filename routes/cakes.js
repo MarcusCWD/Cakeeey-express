@@ -94,7 +94,7 @@ router.post("/create", async (req, res) => {
             "error_messages",
             `${form.fields.name.value} base cake already exist within the database`
           );
-          res.redirect("/cakes/create");
+          res.redirect("/cakeeeyadmin/cakes/create");
           return;
         }
       }
@@ -108,7 +108,7 @@ router.post("/create", async (req, res) => {
         "success_messages",
         `New Cake base ${cake.toJSON().name} has been created`
       );
-      res.redirect("/cakes");
+      res.redirect("/cakeeeyadmin/cakes");
     },
     error: async (form) => {
       req.flash("error_messages", `Creation error. Try again`);
@@ -177,7 +177,7 @@ router.post("/:cake_id/update", async (req, res) => {
         "success_messages",
         `New Cake base ${cake.toJSON().name} has been updated`
       );
-      res.redirect("/cakes");
+      res.redirect("/cakeeeyadmin/cakes");
     },
     error: async (form) => {
       req.flash("error_messages", `Creation error. Try again`);
@@ -215,7 +215,7 @@ router.post("/:cake_id/delete", async (req, res) => {
   });
   await cake.destroy();
   req.flash("success_messages", `Cake has been deleted`);
-  res.redirect("/cakes");
+  res.redirect("/cakeeeyadmin/cakes");
 });
 
 module.exports = router;

@@ -7,10 +7,10 @@
     <div class="py-1" style="border: 4px solid  #8f9192">
         {{{form}}}
         <input type="submit" class="mb-3 mt-3 btn btn-primary" value="Search" />
-        <a href="/cakes" class="mb-3 mt-3 btn btn-secondary">Reset Search</a>
+        <a href="/cakeeeyadmin/cakes" class="mb-3 mt-3 btn btn-secondary">Reset Search</a>
     </div>
 </form>
-<a href="/cakes/create" class="btn btn-success mt-3">create</a>
+<a href="/cakeeeyadmin/cakes/create" class="btn btn-success mt-3">create</a>
 <table class="table">
     <thead>
         <tr>
@@ -59,8 +59,8 @@
                 {{/each}}
             </td>
             <td>
-                <a href="/cakes/{{this.id}}/update" class="btn btn-primary btn-sm">Update</a>
-                <a href="/cakes/{{this.id}}/delete" class="btn btn-danger btn-sm">Delete</a>
+                <a href="/cakeeeyadmin/cakes/{{this.id}}/update" class="btn btn-primary btn-sm">Update</a>
+                <a href="/cakeeeyadmin/cakes/{{this.id}}/delete" class="btn btn-danger btn-sm">Delete</a>
             </td>
         </tr>
         {{/each}}

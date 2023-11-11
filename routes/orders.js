@@ -51,7 +51,7 @@ router.post("/:order_id/update", async (req, res) => {
       order.set(formStore);
       order.save();
       req.flash("success_messages", `Order has been updated`);
-      res.redirect("/orders");
+      res.redirect("/cakeeeyadmin/orders");
     },
     error: async (form) => {
       req.flash("error_messages", `Update error. Try again`);

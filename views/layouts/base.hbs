@@ -17,7 +17,7 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/">Cakeeey.</a>
+      <a class="navbar-brand" href="/cakeeeyadmin">Cakeeey.</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -25,27 +25,27 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/orders">Order</a>
+            <a class="nav-link active" aria-current="page" href="/cakeeeyadmin/orders">Order</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/users">Customers</a>
+            <a class="nav-link active" aria-current="page" href="/cakeeeyadmin/users">Customers</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/products">Current Product</a>
+            <a class="nav-link active" aria-current="page" href="/cakeeeyadmin/products">Current Product</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/cakes">Base Cake</a>
+            <a class="nav-link active" aria-current="page" href="/cakeeeyadmin/cakes">Base Cake</a>
           </li>
         </ul>
         <div>
           {{#if user}}
           Hi, {{user.firstname}} {{user.lastname}}
 
-          <a href="/users/logout" class="ml-3 btn btn-info btn-sm">Logout</a>
+          <a href="/cakeeeyadmin/users/logout" class="ml-3 btn btn-info btn-sm">Logout</a>
 
           {{else}}
           Hi, Please login
-          <a href="/users/login" class="ml-3 btn btn-info btn-sm">Login</a>
+          <a href="/cakeeeyadmin/users/login" class="ml-3 btn btn-info btn-sm">Login</a>
           {{/if}}
         </div>
 

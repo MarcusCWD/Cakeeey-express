@@ -38,7 +38,7 @@ router.post("/create", async (req, res) => {
               "error_messages",
               `This product already exist within the database`
             );
-            res.redirect("/products/create");
+            res.redirect("/cakeeeyadmin/products/create");
             return;
           }
         }
@@ -47,7 +47,7 @@ router.post("/create", async (req, res) => {
       await product.save();
 
       req.flash("success_messages", `New Product has been created`);
-      res.redirect("/products");
+      res.redirect("/cakeeeyadmin/products");
     },
     error: async (form) => {
       req.flash("error_messages", `Creation error. Try again`);
@@ -94,7 +94,7 @@ router.post("/:product_id/update", async (req, res) => {
               "error_messages",
               `This product is already existing within database`
             );
-            res.redirect("/products");
+            res.redirect("/cakeeeyadmin/products");
             return;
           }
         }
@@ -102,7 +102,7 @@ router.post("/:product_id/update", async (req, res) => {
       product.set(form.data);
       product.save();
       req.flash("success_messages", `Product has been updated`);
-      res.redirect("/products");
+      res.redirect("/cakeeeyadmin/products");
     },
     error: async (form) => {
       req.flash("error_messages", `Update error. Try again`);
@@ -146,7 +146,7 @@ router.post("/:product_id/delete", async (req, res) => {
       product.toJSON().cakesize.size
     }cm has been deleted`
   );
-  res.redirect("/products");
+  res.redirect("/cakeeeyadmin/products");
 });
 
 module.exports = router;
