@@ -123,6 +123,10 @@ async function main() {
   app.use('/api/cart', express.json(), api.cart);
   app.use('/api/user', express.json(), api.user);
   app.use('/api/order', express.json(), api.order);
+
+  app.use('*',function(req,res){
+    res.sendStatus(404)
+  })
 }
 
 main();
