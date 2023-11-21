@@ -6,10 +6,8 @@ const knex = require('knex')({
       database: process.env.DB_DATABASE,
       host: process.env.DB_HOST,
       port: process.env.DB_PORT
-      // ssl:{
-      //   rejectUnauthorized:false
-      // }
-    }
+    },
+    pool: {min: 0, max: 7}
   })
   const bookshelf = require('bookshelf')(knex)
   
