@@ -1,6 +1,6 @@
 #  Cakeeey Admin Site and RESTful API
 
-The Admin site is used for product and order management. The management site can be found [here](https://cakeeey.onrender.com)
+The Admin site is used for product and order management. The management site can be found [here](https://celeae.shop/cakeeeyadmin)
 
 ## Context
 
@@ -35,13 +35,9 @@ Get | /api/products/seasons | Obtain all season infomation
 
   The Admin site and API uses Express .js, a fast, unopinionated, minimalist web framework for Node.js
 
-- [Postgres](https://www.postgresql.org/)
-
-  Render deployment natively uses postgres
-
 - [MySql](https://www.mysql.com/)
 
-  Used for testing within local environment
+  Used for testing, production
 
 - [BookShelf ORM](https://bookshelfjs.org/)
 
@@ -53,9 +49,12 @@ Get | /api/products/seasons | Obtain all season infomation
 
 # Deployment
 
-- [Render](https://dashboard.render.com/)
+- [Hertzner](https://www.hetzner.com/)
 
-  This API is deployed using Render.
+  * Cloud hosting & Firewall of VPS
+  * PM2 instance manager
+  * Nginx Web Server (gateway)
+  * Linux based OS
 
 # Acknowledgements
 
